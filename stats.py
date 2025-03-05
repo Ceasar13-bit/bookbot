@@ -1,30 +1,39 @@
-import string
-
+import re
 def count_words(book):
        return f"Found {len(book.split())} total words"
 
+def count_most_common(book, top_words):
+       book = book.lower().split()
+       most_common = {}
+       poattern = r"[^\w\s]"
+       for word in book:
+              word = re.sub(poattern, "", word)
+              if word not in most_common:
+                     most_common[word] = 1
+              else:
+                     most_common[word] += 1
+       sorted_words =  sorted(most_common.items(), key= lambda x: x[1], reverse= True)
+       return sorted_words[:top_words]
+
 def count_characters(book):
        book = book.lower()
-       characters = string.printable + "æâêëô" #not needed
        result = {}
        for char in book:
-              if char in characters:  #not needed
+              if char.isalpha():
                      try:
                             result[char] += 1
                      except KeyError:
-                            result[char] = 1
-              
+                            result[char] = 1     
        return result
 
 def sort_result(chars):
        report = []
        for char in chars:
-              if char.isalpha():  #move to upper function
-                     report.append({"character": char, "count": chars[char]})
+              report.append({"character": char, "count": chars[char]})
        report.sort(key=lambda character: character["count"], reverse=True)
        return report
 
-def create_report(report, result, book_path):
+def create_report(report, result, book_path, top_words):
        print("============ BOOKBOT ============")
        print(f"Analyzing book found at {book_path}")
        print("----------- Word Count ----------")
@@ -32,5 +41,7 @@ def create_report(report, result, book_path):
        print("--------- Character Count -------")
        for char in report:
               print(f"{char["character"]}: {char["count"]}")
+       for word in top_words:
+              print(f"{word[0]}: {word[1]}")
        print("============= END ===============")
 

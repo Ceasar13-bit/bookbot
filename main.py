@@ -1,5 +1,5 @@
 import sys
-from stats import count_words, count_characters, sort_result, create_report
+from stats import count_words, count_characters, sort_result, create_report, count_most_common
 
 def main():
        if len(sys.argv) != 2:
@@ -9,7 +9,11 @@ def main():
        book = get_book_text(book_path)
        words = count_words(book)
        characters = sort_result(count_characters(book))
-       create_report(characters,words,book_path)
+       show_top_words = int(input("How many most common words should I display? "))
+       top_words = count_most_common(book, show_top_words)
+       create_report(characters,words,book_path,top_words)
+       
+       
 
 def get_book_text(path_to_book):
        try:
