@@ -1,14 +1,20 @@
 import re
+
 def count_words(book):
        return f"Found {len(book.split())} total words"
 
 def count_most_common(book, top_words):
        book = book.lower().split()
        most_common = {}
-       poattern = r"[^\w\s]"
+       pattern = r"[^\w\s]"
+       with open("stopwords.txt") as file:
+                     stopwords = set(file.read().splitlines())
        for word in book:
-              word = re.sub(poattern, "", word)
-              if word not in most_common:
+              word = re.sub(pattern, "", word)
+              
+              if word in stopwords:
+                     continue
+              elif word not in most_common:
                      most_common[word] = 1
               else:
                      most_common[word] += 1
