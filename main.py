@@ -1,7 +1,10 @@
 import sys
-from stats import count_words, count_characters, sort_result, create_report, count_most_common
+import argparse
+from stats import *
+from cli import get_args
 
 def main():
+       args = get_args()
        if len(sys.argv) != 2:
               print("Usage: python3 main.py <path_to_book>")
               sys.exit(1)
@@ -24,5 +27,5 @@ def get_book_text(path_to_book):
               print("No book found")
               sys.exit(2)
 
-
-main()
+if __name__ == "__main__":
+       main()
