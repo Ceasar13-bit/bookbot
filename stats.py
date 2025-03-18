@@ -4,16 +4,17 @@ import argparse
 def count_words(book):
        return f"Found {len(book.split())} total words"
 
-def count_most_common(book, top_words):
+def count_most_common(book, top_words, omit_stop_words=False):
        book = book.lower().split()
        most_common = {}
        pattern = r"[^\w\s]"
-       with open("stopwords.txt") as file:
+       if omit_stop_words:       
+              with open("stopwords.txt") as file:
                      stopwords = set(file.read().splitlines())
        for word in book:
               word = re.sub(pattern, "", word)
               
-              if word in stopwords:
+              if omit_stop_words and word in stopwords:
                      continue
               elif word not in most_common:
                      most_common[word] = 1
