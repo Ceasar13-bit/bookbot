@@ -9,7 +9,7 @@ def main():
        book = get_book_text(book_path)
        words = count_words(book)
        characters = sort_result(count_characters(book))
-       show_top_words = int(input("How many most common words should I display? "))
+       show_top_words = args.n
        top_words = count_most_common(book, show_top_words, args.omit_stop_words)
        create_report(characters,words,book_path,top_words)
        

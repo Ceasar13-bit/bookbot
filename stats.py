@@ -49,6 +49,7 @@ def create_report(report, result, book_path, top_words):
        print("--------- Character Count -------")
        for char in report:
               print(f"{char["character"]}: {char["count"]}")
+       print("--------- Top Words -------")
        for word in top_words:
               print(f"{word[0]}: {word[1]}")
        print("============= END ===============")
