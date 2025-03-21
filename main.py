@@ -1,5 +1,3 @@
-import sys
-import argparse
 from stats import *
 from cli import get_args
 
@@ -15,14 +13,7 @@ def main():
        
        
 
-def get_book_text(path_to_book):
-       try:
-              with open(path_to_book) as file:
-                     file_contens = file.read()
-                     return file_contens
-       except FileNotFoundError:
-              print("No book found")
-              sys.exit(2)
+
 
 if __name__ == "__main__":
        main()

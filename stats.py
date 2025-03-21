@@ -1,18 +1,31 @@
 import re
-import argparse
+import sys
 
-def count_words(book):
-       return f"Found {len(book.split())} total words"
+def get_book_text(path_to_book:str) -> str:
+       try:
+              with open(path_to_book) as book:
+                     book_text = book.read()
+                     return book_text
+       except FileNotFoundError:
+              print("No book found")
+              sys.exit(2)
+
+def clean_text(book_text:str) -> str:
+       pattern = r"[^\w\s]"
+       return re.sub(pattern, "", book_text)
+
+def count_words(book_text, omit_stop_words=False): # add option to omit stop words, count case sensitive or case insensitive
+       
+       return
 
 def count_most_common(book, top_words, omit_stop_words=False):
        book = book.lower().split()
        most_common = {}
-       pattern = r"[^\w\s]"
+       
        if omit_stop_words:       
               with open("stopwords.txt") as file:
                      stopwords = set(file.read().splitlines())
        for word in book:
-              word = re.sub(pattern, "", word)
               
               if omit_stop_words and word in stopwords:
                      continue
@@ -23,22 +36,18 @@ def count_most_common(book, top_words, omit_stop_words=False):
        sorted_words =  sorted(most_common.items(), key= lambda x: x[1], reverse= True)
        return sorted_words[:top_words]
 
-def count_characters(book):
-       book = book.lower()
-       result = {}
-       for char in book:
+def count_characters(book_text:str) -> dict: # add option to count case sensitive or case insensitive
+       characters = {}
+       for char in book_text:
               if char.isalpha():
                      try:
-                            result[char] += 1
+                            characters[char] += 1
                      except KeyError:
-                            result[char] = 1     
-       return result
+                            characters[char] = 1     
+       return characters
 
-def sort_result(chars):
-       report = []
-       for char in chars:
-              report.append({"character": char, "count": chars[char]})
-       report.sort(key=lambda character: character["count"], reverse=True)
+def sort_result(data_dict:dict, reverse: bool = True) -> list:
+       report = sorted(data_dict.items(), key= lambda x: x[1], reverse= reverse)
        return report
 
 def create_report(report, result, book_path, top_words):
