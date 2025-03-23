@@ -14,43 +14,41 @@ def clean_text(book_text:str) -> str:
        pattern = r"[^\w\s]"
        return re.sub(pattern, "", book_text)
 
-def count_words(book_text, omit_stop_words=False): # add option to omit stop words, count case sensitive or case insensitive
-       
-       return
+def count_words(cleaned_book_text):
+       words = {}
+       cleaned_book_text = cleaned_book_text.split()
+       for word in cleaned_book_text:
+              words[word] = words.get(word, 0) + 1
+       return words
 
-def count_most_common(book, top_words, omit_stop_words=False):
-       book = book.lower().split()
-       most_common = {}
-       
-       if omit_stop_words:       
-              with open("stopwords.txt") as file:
-                     stopwords = set(file.read().splitlines())
-       for word in book:
-              
-              if omit_stop_words and word in stopwords:
-                     continue
-              elif word not in most_common:
-                     most_common[word] = 1
-              else:
-                     most_common[word] += 1
-       sorted_words =  sorted(most_common.items(), key= lambda x: x[1], reverse= True)
-       return sorted_words[:top_words]
+def count_most_common(words:list, count:int) -> list:
+    return words[:count]
 
-def count_characters(book_text:str) -> dict: # add option to count case sensitive or case insensitive
+def count_characters(book_text:str, case_sensitive:bool=False) -> dict:
        characters = {}
+       if not case_sensitive:
+              book_text = book_text.lower()
        for char in book_text:
-              if char.isalpha():
-                     try:
-                            characters[char] += 1
-                     except KeyError:
-                            characters[char] = 1     
+              characters[char] = characters.get(char, 0) + 1  
        return characters
 
 def sort_result(data_dict:dict, reverse: bool = True) -> list:
        report = sorted(data_dict.items(), key= lambda x: x[1], reverse= reverse)
        return report
 
-def create_report(report, result, book_path, top_words):
+def omit_stop_words(words_dict:dict) -> dict:
+       with open("stopwords.txt") as file:
+                     stopwords = set(file.read().splitlines())
+       processed_words = words_dict.copy()
+       new_words = dict(filter(lambda w: w[0] not in stopwords, processed_words.items()))
+       return new_words
+
+def apply_case_filter(book_text: str, case_sensitive: bool) -> str:
+    return book_text if case_sensitive else book_text.lower()
+
+
+
+def create_report(report, result, book_path, top_words): # marked for later removal
        print("============ BOOKBOT ============")
        print(f"Analyzing book found at {book_path}")
        print("----------- Word Count ----------")
