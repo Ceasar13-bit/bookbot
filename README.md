@@ -1,2 +1,1 @@
-# bookbot
-BookBot is my first [Boot.dev](https://www.boot.dev) project!
+BookBot is a Python-powered CLI tool that analyzes books and extracts useful statistics like word counts, character frequencies, and the most common words. Built as part of my journey through Boot.dev, this is my first real project — and the beginning of something bigger.
