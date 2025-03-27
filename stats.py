@@ -4,7 +4,7 @@ from collections import Counter
 
 def get_book_text(path_to_book:str) -> str:
        try:
-              with open(path_to_book) as book:
+              with open(path_to_book,encoding="utf-8-sig") as book:
                      book_text = book.read()
                      return book_text
        except FileNotFoundError:
@@ -15,7 +15,8 @@ def clean_text(text: str) -> str:
        return re.sub(r"[^\w\s]", "", text)
 
 def count_words(book_text:str) -> dict:
-       return Counter(book_text.split())
+       words = book_text.split()
+       return Counter(words)
 
 def get_top_n_sorted(words:list, count:int) -> list:
     return words[:count]
