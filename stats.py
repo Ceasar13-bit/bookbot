@@ -18,7 +18,7 @@ def count_words(book_text:str) -> dict:
        words = book_text.split()
        return Counter(words)
 
-def get_top_n_sorted(words:list, count:int) -> list:
+def get_top_n_sorted(words:list, count:int = 1) -> list:
     return words[:count]
 
 def count_characters(book_text:str) -> dict:
