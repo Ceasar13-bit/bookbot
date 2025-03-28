@@ -17,17 +17,20 @@ This is no longer just a script—this is the foundation of a language-aware eng
 - Modular architecture (CLI, parser, stats, pipeline)
 
 ## Getting Started
+Here's an example analysis pipeline:
 
 ```bash
 python main.py path_to_book
 ```
-Then inside the RELP example flow:
+Then inside the REPL:
+```text
 >> lower_text
 >> clean_text
 >> count_words
 >> sort
 >> top 10
 >> run
+```
 
 ## Translation by Frequency (Coming Soon)
 
