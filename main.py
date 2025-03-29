@@ -22,11 +22,32 @@ def main():
                      print(data)
                      active_steps = []
                      data = book_text
+              elif command[0] in ("clear", "reset"):
+                     active_steps = []
+                     print("Pipeline cleared")
               elif command[0] == "exit!":
                      sys.exit()            
               elif command[0] in pipeline_map:
                      active_steps.append(parse_user_command(user_command))
-                     print(active_steps)
+              elif command[0] == "show":
+                     for i, step in enumerate(active_steps):
+                            params = ", ".join(f"{k}={v}" for k, v in step[1].items()) if step[1] else ""
+                            print(f"{i + 1} {step[0]} {params}")
+              elif command[0] == "remove":
+                     if not active_steps:
+                            print("You haven't input any command yet")
+                            continue
+                     elif len(command) == 1:
+                            removed = active_steps.pop()
+                            print(f"removed {removed[0]}")
+                     elif len(command) == 2 and command[1].isdigit():
+                            if 1 <= int(command[1]) <= len(active_steps):
+                                   removed = active_steps.pop(int(command[1]) - 1)
+                                   print(f"Removed step {command[1]}: {removed[0]}")
+                            else:
+                                   print(f"Invalid index: {command[1]}. Use 'show' to see current steps.")
+                     else:
+                            print("usage: remove <command index number>")
               else:
                      print("unknown command")
        

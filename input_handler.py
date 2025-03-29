@@ -1,12 +1,12 @@
-def parse_user_command(user_input:str) -> str:
+def parse_user_command(user_input:str) -> tuple:
     command_parsers = {
-        "top": lambda args: {"count": 1} if not args else {"count": int(args[0])}, #like that for all f with default args
+        "top": lambda args: {"count": 1} if not args else {"count": int(args[0])}, 
         "lower_text": lambda args: {},
-        "omit_stop_words": lambda args: {"stopwords_path": "stopwords.txt"},
+        "omit_stop_words": lambda args: {"stopwords_path": "stopwords.txt"} if not args else {"stopwords_path": args[0]},
         "count_characters": lambda args: {},
         "count_words": lambda args: {},
         "clean_text" : lambda args: {},
-        "sort" : lambda args: {"reverse": True}
+        "sort" : lambda args: {"reverse": True} if not args else {"reverse" : not(args[0].lower() == "false")}
     }
     tokens = user_input.split()
     cmd = tokens[0]
