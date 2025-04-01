@@ -36,7 +36,6 @@ def main():
               elif command[0] == "remove":
                      if not active_steps:
                             print("You haven't input any command yet")
-                            continue
                      elif len(command) == 1:
                             removed = active_steps.pop()
                             print(f"removed {removed[0]}")
@@ -48,6 +47,13 @@ def main():
                                    print(f"Invalid index: {command[1]}. Use 'show' to see current steps.")
                      else:
                             print("usage: remove <command index number>")
+              elif command[0] == "insert":
+                     if len(command) == 2 and command[1] in pipeline_map:
+                            active_steps.append(parse_user_command(command[1]))
+                     elif len(command) == 3 and command[1] in pipeline_map and command[2].isdigit():
+                            active_steps.insert(int(command[2]) - 1, parse_user_command(command[1]))
+                     else:
+                            print("usage: insert <command_name> [index number]")
               else:
                      print("unknown command")
        
