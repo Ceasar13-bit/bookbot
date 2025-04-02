@@ -19,7 +19,8 @@ def main():
                      for step_name, params in active_steps:
                             func = pipeline_map[step_name]
                             data = func(data, **params)
-                     print(data)
+                     for word, num in data:
+                            print(f"{word}:{num}")
                      active_steps = []
                      data = book_text
               elif command[0] in ("clear", "reset"):
